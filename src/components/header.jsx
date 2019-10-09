@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
 import { Layout, Icon } from 'antd';
 import { connect  } from 'react-redux'
-import { mapStateToProps, mapDispatchToProps } from '@/reducer/connect'
-import { filterData } from '@/utils/index.js'
+import { changeSlide,foldSlide } from '../store/actions/slideAction'
+import PropTypes from 'prop-types';
 const { Header } = Layout;
+//构建属性（包括函数），每个页面分开构建
+function mapStateToProps(state) {
+    return {
+        slidecollapsed: state.slideReducer.slidecollapsed
+    } 
+}
+function mapActionToProps(dispatch) {
+    return {
+        changeSlide: () => dispatch(changeSlide()),
+        foldSlide: (bool) => dispatch(foldSlide(bool)),
+    }
+}
 class MyHeader extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            onSlidecollapsed: this.props.onSlidecollapsed
-        };
     }
     toggle = () => {
-        console.log(this.props)
-        this.state.onSlidecollapsed()
+        this.props.changeSlide();
+        //直接折叠后不展开
+        // this.props.foldSlide(true);
     }
     render() {
-        let { slidecollapsed } = this.props
-        slidecollapsed = filterData(slidecollapsed, 'slidecollapsed')
+        let {slidecollapsed} = this.props
         return (
                 <Header style={{ background: '#fff', padding: 0 }}>
                     <Icon
@@ -29,4 +38,9 @@ class MyHeader extends Component {
         )
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(MyHeader);
+MyHeader.propTypes = {
+    slidecollapsed: PropTypes.bool.isRequired,
+    changeSlide: PropTypes.func.isRequired,
+    foldSlide: PropTypes.func.isRequired
+ }
+export default connect(mapStateToProps,mapActionToProps)(MyHeader);

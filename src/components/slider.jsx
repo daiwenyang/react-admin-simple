@@ -1,37 +1,44 @@
 import React, { Component } from 'react';
-import { Menu, Icon,Layout } from 'antd'; 
-import { mapStateToProps, mapDispatchToProps } from '@/reducer/connect' 
+import { Menu, Icon,Layout } from 'antd';
 import {connect} from "react-redux"; 
-import { filterData } from '@/utils/index.js'
+import {menus} from '../router'
+import { Link,withRouter } from 'react-router-dom';
 const { Sider } = Layout; 
+
+//构建属性
+function mapStateToProps(state) {
+    return {
+        slidecollapsed: state.slideReducer.slidecollapsed
+    } 
+}
 class MySlider extends Component {
+    constructor(props){
+        super(props)
+    }
     render() {
         let { slidecollapsed } = this.props
-        slidecollapsed =  filterData(slidecollapsed, 'slidecollapsed')
         return (
             <Sider
                 trigger={null}
                 collapsible
                 collapsed={ slidecollapsed } 
             >
-                <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1">
-                        <Icon type="user" />
-                        <span>nav 1</span>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Icon type="video-camera" />
-                        <span>nav 2</span>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="upload" />
-                        <span>nav 3</span>
-                    </Menu.Item>
+                <div className="logo" style={{fontSize:'18px',lineHeight:'40px',color:'#fff'}} >this is logo</div>
+                <Menu theme="dark" mode="inline" selectedKeys={[this.props.location.pathname]}>
+                    {menus.map(item=>{
+                        return (
+                            <Menu.Item key={item.path}>
+                                <Link to={(item.path) + (item.query || '')}>
+                                    <Icon type={item.icon || 'user'} />
+                                    <span className="nav-text">{item.name}</span>
+                                </Link>
+                            </Menu.Item>
+                        )
+                    })}
                 </Menu>
             </Sider>
 
         )
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(MySlider); 
+export default connect(mapStateToProps)(withRouter(MySlider)); 

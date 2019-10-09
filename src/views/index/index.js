@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';  
 import MySlider  from '@/components/slider' 
 import MyHeader  from '@/components/header' 
-import Crumbs  from '@/components/crumbs' 
+// import Crumbs  from '@/components/crumbs' 
 import MyMain  from '@/components/main'
 import styles from './index.module.scss'
 
 class Index extends Component {
     constructor(props){ 
-        super(props) 
+        super(props)
         this.state = { 
             onSlidecollapsed: this.props.onSlidecollapsed 
         }; 
