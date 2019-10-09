@@ -12,11 +12,11 @@ export const main = [
 ]
 
 export const menus = [
-    { path: '/index/stores', exact: false,  name: '商超系统管理', component: Stores },
-    { path: '/index/analysis', exact: false,  name: '数据分析', component: Test },
-    { path: '/index/customer', exact: false,  name: '客户管理', component: Test },
-    { path: '/index/employee', exact: false,  name: '员工管理', component: Test },
-    { path: '/index/notice', exact: false,  name: '公告系统', component: Test },
+    { path: '/index/stores', exact: false,  name: 'tab1', component: Stores },
+    { path: '/index/analysis', exact: false,  name: 'tab2', component: Test },
+    { path: '/index/customer', exact: false,  name: 'tab3', component: Test },
+    { path: '/index/employee', exact: false,  name: 'tab4', component: Test },
+    { path: '/index/notice', exact: false,  name: 'tab5', component: Test },
 ]
 
 export const routerConfig =  {
